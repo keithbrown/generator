@@ -1,0 +1,6 @@
+cd ../../../..
+rm -rf bp_build
+./create_bp_build -p C:/lib/PCCTS/v1.33_mr20 -m C:/lib/mgls
+cd bp_prod/win32/7.1B/build_scripts
+./comp_private win32 7.1B compile
+./prod_private win32 7.1B mc_dbms trans gen_erate
