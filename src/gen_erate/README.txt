@@ -49,29 +49,32 @@ on either on the build server or their local development machine.
   
 3 Configure the workspace
 --------------------------
-3.1  On the build server, open the workspace c:/workspaces/Generator with
-     BridgePoint or VSX_Dev.
-  . Update the source code for the projects to the latest from HEAD
+3.1  On the build server, open the workspace c:/workspaces/Generator_git with
+     BridgePoint.
+  . Update the source code for the projects to the latest from master 
   . No additional configuration is necessary, the workspace build files are 
     already set up for this machine.
       
 3.2  If you're doing a local build
-  . Check out (or sync with HEAD) <CVS>/mc
-  . Check out (or sync with HEAD) <CVS>/model_compilers/generator/gen_erate
-  . Check out (or sync with HEAD) <CVS>/libTRANS
+  . Check out (or sync with master) <github>/xtuml/mc
+  . Check out (or sync with master) <github>/xtuml/generator
+  . Check out (or sync with master) <github>/xtuml/internal
   
   Setup up for the Build
-  _- Navigate to <CVS work dir>/model_compilers/generator/gen_erate
+  _- Navigate to <git root>/xtuml/generator/gen_erate
   _- Edit the file "msvc6.bat"
        Replace "set HOME=/home/build"
           with "set HOME=/home/<your username>"
-  _- cd <CVS work dir>/model_compilers/generator/gen_erate
+  _- cd <git root>/generator/gen_erate
+  _- Edit the file "create_bp_build"
+      . In libtrans_dir variable, replace "/git/xtuml/internal/src/libTRANS/"
+           with "/cygdrive/c/<git repo root dir>/xtuml/internal/src/libTRANS/"
   _- cd bp_prod/win32/7.1B/build_scripts
   _- Edit the file "get_host_platform.inc"
-      . Replace "/c/workspaces/Generator/model_compilers/"
-           with "/cygdrive/c/<CVS work dir>/model_compilers/"
-      . Replace "c:/workspaces/Generator/model_compilers/"
-           with "c:/<CVS work dir>/model_compilers/"
+      . Replace "/c/cygwin/git/xtuml/generator/"
+           with "/cygdrive/c/<git repo root dir>/xtuml/generator/"
+      . Replace "c:/cygwin/git/xtuml/generator/"
+           with "c:/<git repo root dir>/xtuml/generator/"
       . Replace CC_DIR=C:/PROGRA~1/MICROS~1/VC98/BIN
            with CC_DIR=<"short-style" path to MS VC6 bin folder>
   _- Note: The following build steps can be repeated after modifying source or
@@ -83,22 +86,22 @@ on either on the build server or their local development machine.
 4  Compiling the Generator EXEs
 --------------------------------
 4.1  Open cygwin shell
-  _- Navigate to <CVS work dir>/model_compilers/generator/gen_erate
+  _- Navigate to <git repo root dir>/xtuml/generator/src/gen_erate
   _- ./msvc6.bat
      Warning: This causes the current directory to change.
 
 4.2  Update the generator version number.
-  _- Delete the current version number on line 77 of
+  _- Increment the current version number on line 77 of
      .../gen_erate/bp_source/win32/7.1B/main/src/gen_erate/main_gen_erate.cc
      while leaving the revision tag.
-  _- Check in the file to CVS
-  _- CVS will update the version number
+  _- Check in the file to git and put the change to github 
 
 4.3  Build
-  _- cd <CVS working dir>/model_compilers/generator/gen_erate
+  _- cd <git repo root dir>/xtuml/generator/src/gen_erate
   _- rm -rf bp_build
   _- ./create_bp_build -p C:/lib/PCCTS/v1.33_mr20 -m C:/lib/mgls
   _- cd bp_prod/win32/7.1B/build_scripts
+  _- dos2unix * 
 
 4.3.1 Release build
   _- ./comp_private win32 7.1B compile
@@ -120,9 +123,9 @@ on either on the build server or their local development machine.
   _- editbin.exe /LARGEADDRESSAWARE gen_erate.exe
   _- dumpbin.exe /headers gen_erate.exe | grep "Application can handle large (>2GB) addresses"
   _R The string IS present in the generate binary.
-  _R Note: This is simply a second chance to check that the gen_erate binary IS properly modified
-     by editbin.exe.  Repeat that dumpbin.exe line and ASSURE that the string being grepped IS
-     found.
+  _R Note: This is simply a second chance to check that the gen_erate binary 
+     is properly modified by editbin.exe.  Repeat that dumpbin.exe line and 
+     ASSURE that the string being grepped IS found.
      
 
 5  Using the EXEs
@@ -138,8 +141,8 @@ on either on the build server or their local development machine.
   . if you built on the server
     _- cp c:/temp/gen_erate.exe .
   . if you built locally
-    _- cp <CVS work dir>/model_compilers/generator/gen_erate/bp_build/win32/7.1B
-           /build/gen_erate.exe .
+    _- cp <git repo root dir>/xtuml/generator/src/gen_erate/bp_build/win32
+           /7.1B/build/gen_erate.exe .
   _- cp gen_erate.exe gen_file.exe
   _- cp gen_erate.exe gen_import.exe
 5.1.3 Update MC plugin
@@ -149,16 +152,17 @@ on either on the build server or their local development machine.
   . if you built on the server
     _- cp c:/temp/gen_erate.exe .
   . if you built locally
-    _- cp <CVS work dir>/model_compilers/generator/gen_erate/bp_build/win32/7.1B
-           /build/gen_erate.exe .
-5.1.4 Move the new gen_erate to the tucson server
+    _- cp <git repo root dir>/xtuml/generator/src/gen_erate/bp_build/win32
+           /7.1B/build/gen_erate.exe .
+5.1.4 Move the new gen_erate so it is picked up by the build server 
   _- Perform smoke tests to verify the generator
      works properly.
-  _- Telnet into tucson, log in with your mgc UNIX credentials
-  _- cd /arch1/products/tiger/extra_files_for_build
-  _- mv gen_erate.exe old_files/gen_erate.exe.<old version>.<current datestamp>
-  _- ftp the new gen_erate.exe down from ftp://mentorweb/pub/BP/dropoff
-  _- chmod 664 gen_erate.exe
+  _- Remote desktop to svr-azt-eng-03 (if not already there)
+  _- Start BridgePoint on the workspace c:/workspaces/build_artifacts
+  _- Switch to the Resource perspective
+  _- Expand the extra_files_for_build project
+  _- Copy the new gen_erate.exe into this folder
+  _- Commit the change to SVN
 
 
 6. Using MS Visual Studio as a class browser

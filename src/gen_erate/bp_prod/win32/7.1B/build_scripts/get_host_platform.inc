@@ -109,13 +109,13 @@ case $RUNNING_PLATFORM in
     case 1 in
       1 )
         GALAXYHOME=C:/lib/GalaxyGC30
-        MC_DBMS_ROOTDIR=C:/workspaces/Generator/model_compilers/generator/gen_erate/bp_build/win32/7.1B/build/mc_dbms
+        MC_DBMS_ROOTDIR=C:/cygwin/git/xtuml/generator/src/gen_erate/bp_build/win32/7.1B/build/mc_dbms
         MC_DBMS_SCHEMA_DIR=${MC_DBMS_ROOTDIR}
         MGLS_HOME=C:/lib/mgls/win32
         CC_DIR=C:/PROGRA~1/MICROS~1/VC98/BIN
         JAVA_HOME=C:/PROGRA~1/Java/jdk1.3.1
         PLATFORM_JAVA=win32
-        ARCH1=/c/workspaces/Generator/model_compilers/generator/gen_erate
+        ARCH1=/c/cygwin/git/xtuml/generator/src/gen_erate
         PRIVATE_HOME=$ARCH1
         MAKEFLAGS=--unix
         ;;
