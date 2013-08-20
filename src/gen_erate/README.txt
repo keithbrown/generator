@@ -61,7 +61,7 @@ on either on the build server or their local development machine.
   . Check out (or sync with master) <github>/xtuml/internal
   
   Setup up for the Build
-  _- Navigate to <git root>/xtuml/generator/gen_erate
+  _- Navigate to <git root>/xtuml/generator/src/gen_erate
   _- Edit the file "msvc6.bat"
        Replace "set HOME=/home/build"
           with "set HOME=/home/<your username>"
@@ -90,11 +90,12 @@ on either on the build server or their local development machine.
   _- ./msvc6.bat
      Warning: This causes the current directory to change.
 
-4.2  Update the generator version number.
+4.2  Verify with the developers or file history that the generator version
+  number was incremented with the latest work.  If it was not:
   _- Increment the current version number on line 77 of
      .../gen_erate/bp_source/win32/7.1B/main/src/gen_erate/main_gen_erate.cc
      while leaving the revision tag.
-  _- Check in the file to git and put the change to github 
+  _- Check in the file to git and push the change to github 
 
 4.3  Build
   _- cd <git repo root dir>/xtuml/generator/src/gen_erate
