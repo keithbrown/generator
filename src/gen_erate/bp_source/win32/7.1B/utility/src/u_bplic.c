@@ -354,7 +354,7 @@ void get_display(char* mgls_attr_display)
 	mgls_attr_display[0] = '\0';
 	display_line[0] = '\0';
 
-	display_file_ptr = fopen(".xtumldisplay", "r");
+	display_file_ptr = fopen(".mgxtumldisplay", "r");
 
 	if (display_file_ptr != NULL)
 	{
