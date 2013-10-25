@@ -74,7 +74,7 @@ int getDomainCode(int filePosition, int numFilesProcessed);
  * Global variables that hold command-line results
  */
 
-const std::string CurrentVersionString("$Revision: 1.84 $");
+const std::string CurrentVersionString("$Revision: 1.85 $");
 
 mc_dbms_database*   GS_gen_sim_db_ptr = 0;
 t_boolean           s_quit_on_error = FALSE;
