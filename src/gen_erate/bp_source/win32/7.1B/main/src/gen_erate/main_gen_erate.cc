@@ -74,7 +74,7 @@ int getDomainCode(int filePosition, int numFilesProcessed);
  * Global variables that hold command-line results
  */
 
-const std::string CurrentVersionString("$Revision: 2.0 $");
+const std::string CurrentVersionString("$Revision: 2.1 $");
 
 mc_dbms_database*   GS_gen_sim_db_ptr = 0;
 t_boolean           s_quit_on_error = FALSE;
@@ -742,10 +742,32 @@ void validateLicense()
       hasDAPLic = true;
     }
   } else if ( binaryLicense3020Used ) {
-    try {
-        obtainLicense( BP_LICENSE_3020B );
-        hasBinLic = true;
-    } catch ( std::exception &e ) {}
+	    // WARNING! This try block should not be included in head.
+	    //          It is used to create a demo version of the product for
+	    //          educational purposes.  See CQ issue dts0100590737 for more
+		//          info.
+		try {
+		    obtainLicense( BP_LICENSE_3020B );
+			hasBinLic = true;
+		} catch ( std::exception &e ) {
+		    std::string demoStart = "20131101";
+		    std::string demoEnd   = "20140331";
+		    time_t curTime;
+		    time(&curTime);
+		    struct tm * tmPtr = localtime(&curTime);
+		    std::stringstream curDate("");
+		    curDate.fill('0');
+		    curDate << setw(4) << 1900 + tmPtr->tm_year;
+		    curDate << setw(2) << tmPtr->tm_mon + 1;
+		    curDate << setw(2) << tmPtr->tm_mday;
+		    if ( (curDate.str() < demoStart) || (curDate.str() > demoEnd) ) {
+		  		// If this is not a valid demo the hasBinLic variable remains false.
+		  		hasBinLic = false;
+	        } else {
+		  	  	// We do have the demo license
+			  	hasBinLic = true;
+		    }
+	    }
         
     if ( !hasBinLic ) {
         try {
