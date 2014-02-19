@@ -1,8 +1,6 @@
 /*=========================================================================
  *
- * File:      $RCSfile: main_gen_erate.cc,v $
- * Version:   $Revision: 1.82 $
- * Modified:  $Date: 2013/06/12 13:57:41 $
+ * File:      main_gen_erate.cc
  *
  * (c) Copyright 1992-2013 by Mentor Graphics Corp. All rights reserved.
  *
@@ -74,7 +72,7 @@ int getDomainCode(int filePosition, int numFilesProcessed);
  * Global variables that hold command-line results
  */
 
-const std::string CurrentVersionString("$Revision: 2.1 $");
+const std::string CurrentVersionString("$Revision: 2.2 $");
 
 mc_dbms_database*   GS_gen_sim_db_ptr = 0;
 t_boolean           s_quit_on_error = FALSE;
