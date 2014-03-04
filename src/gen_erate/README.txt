@@ -1,10 +1,8 @@
 ========================================================================
 
-File:      $RCSfile: README.txt,v $
-Version:   $Revision: 1.22 $
-Modified:  $Date: 2013/03/14 05:36:48 $
+File:      README.txt
 
-(c) Copyright 1992-2013 by Mentor Graphics Corp. All rights reserved.
+(c) Copyright 1992-2014 by Mentor Graphics Corp. All rights reserved.
 
 ========================================================================
 This document contains information proprietary and confidential to
@@ -24,7 +22,7 @@ on either on the build server or their local development machine.
 2  Prerequisites
 -----------------
 2.1  Machine setup
-  The build server is already configured to build generator.  The following
+  The server svr-azt-eng-03 is already configured to build generator.  The following
   steps only apply to new development machine setup.
   
 2.1.1  Applications
@@ -49,7 +47,7 @@ on either on the build server or their local development machine.
   
 3 Configure the workspace
 --------------------------
-3.1  On the build server, open the workspace c:/workspaces/Generator_git with
+3.1  On the server (svr-azt-eng-03), open the workspace c:/workspaces/Generator_git with
      BridgePoint.
   . Update the source code for the projects to the latest from master 
   . No additional configuration is necessary, the workspace build files are 
@@ -190,7 +188,7 @@ on either on the build server or their local development machine.
 7. Troubleshooting Build Problems
 ---------------------------------
 7.1  The build steps outlined above will work nearly all the time for the build
-     run on the build server svr-azt-eng-01.  Occasionally, however, due to 
+     run on the server svr-azt-eng-03.  Occasionally, however, due to 
      running the build on a different machine, or an upgrade to cygwin, etc...
      the build will not function correctly.  Here are some tips for debugging
      problems.
