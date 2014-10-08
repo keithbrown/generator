@@ -72,7 +72,7 @@ int getDomainCode(int filePosition, int numFilesProcessed);
  * Global variables that hold command-line results
  */
 
-const std::string CurrentVersionString("$Revision: 2.5 $");
+const std::string CurrentVersionString("$Revision: 2.6 $");
 
 mc_dbms_database*   GS_gen_sim_db_ptr = 0;
 t_boolean           s_quit_on_error = FALSE;
@@ -97,17 +97,6 @@ bool sourceLicense2020Used = false;
 bool binaryLicense2020Used = false;
 bool sourceLicenseSystemCUsed = false;
 bool sourceLicenseVHDLUsed = false;
-
-/**
- * We use this as a flag to determine if we should store a time-stamp in
- * our database that caches the last time a license was aquired.  We'll only
- * do this if we are running as gen_file.exe or as gen_erate.exe when archetypes
- * have been specified.
- * It's important that archetypes be specified, because we don't check the
- * license when we are only importing files, and we must make sure that we
- * go through the license manager at least once.
- */
-bool UseCachedLicense = false;
 
 time_t g_start,g_end;
 
@@ -229,12 +218,6 @@ void generate()
 
      case Archetype_File:
        if ( numArchFilesProcessed == 0 ) {
-         // We go through the open database to aquire a license (as opposed
-         // to calling the license server directly) because aquiring
-         // a license is time-consuming... Our mc_dbms database stores some information
-         // about the last time the license was aquired as an optimization.
-         GS_gen_sim_db_ptr->aquireLicense();
-
           GS_substitution::translate_parm = pt_TranslateInit();
        }
 
@@ -264,7 +247,6 @@ void generate()
   }
 
   L_log::close_log_files ();
-    LM_license::release_license();
 }
 
 /**
@@ -328,12 +310,6 @@ void parseCommandLineOptions(int argc, char** argv)
   MultiArg<string>  arg_archFileList(       "", "arch", "Archetype file name(s)", false, "string");
   MultiArg<int>         arg_multiDomainCode(    "", "d", "The domain code.  This argument must immediately precede the \"-import\" argument that it applies to.", false, "integer");
   ValueArg<int>         arg_singleDomainCode(   "", "d", "The domain code.", false, -1, "integer");
-  SwitchArg                 arg_3020SourceLicense( "", "l3s", "Use MC-3020 source license", false);
-  SwitchArg                 arg_3020BinaryLicense( "", "l3b", "Use MC-3020 binary license", false);
-  SwitchArg                 arg_2020SourceLicense( "", "l2s", "Use MC-2020 source license", false);
-  SwitchArg                 arg_2020BinaryLicense( "", "l2b", "Use MC-2020 binary license", false);
-  SwitchArg                 arg_SystemCSourceLicense( "", "lSCs", "Use SystemC source license", false);
-  SwitchArg                 arg_VHDLSourceLicense( "", "lVHs", "Use VHDL source license", false);
 #ifdef _DEBUG
   SwitchArg             arg_debug(              "", "debug", "Debug the application (int 3 breakpoint)", false);
 #endif
@@ -472,11 +448,6 @@ void parseCommandLineOptions(int argc, char** argv)
     // Populate the InputFiles map
     buildInputFileList(arg_sqlFileList, arg_archFileList);
 
-    // Since we are running as gen_erate, if there are archetype files then
-    // we'll cache the license.
-    if (arg_archFileList.getValue().size() > 0) {
-      UseCachedLicense = true;
-    }
   }
 
   if (persistenceEnabled && gen_file_name_str == "") {
@@ -645,133 +616,6 @@ void initGenerator(int argc, char** argv)
     //  Initialize the trace by clearing all trace flags.
     //
     L_log_trace::clear_all_flags ();
-}
-
-void obtainLicense( BP_LICENSE_TYPE lic )
-{
-#ifndef DisableLicenseManager
-  if ( LM_license::obtain_license(lic, default_feature.char_ptr()) == LM_license::LM_TERMINATE )
-  {
-    std::ostringstream msg;
-    msg << "\nSORRY:  Failed to get " << bp_license_name(lic)
-      << " license from license manager.\n\n";
-    throw std::runtime_error(msg.str());
-  }
-
-  reportTime("Time to obtain a license: ");
-#endif
-}
-
-void validateLicense()
-{
-  bool hasSrcLic = false;
-  bool hasDAPLic = false;
-  bool hasBinLic = false;
-
-  // Check the license the user requested to use on the command line.
-  if ( sourceLicenseSystemCUsed ) {
-    try {
-      obtainLicense( BP_LICENSE_SystemC_S );
-      hasSrcLic = true;
-    } catch ( std::exception &e ) {}    
-
-    if ( !hasSrcLic ) {
-      obtainLicense( BP_LICENSE_GENERATOR );
-      hasDAPLic = true;
-    }
-  } else if ( sourceLicenseVHDLUsed ) {
-    try {
-      obtainLicense( BP_LICENSE_VHDL_S );
-      hasSrcLic = true;
-    } catch ( std::exception &e ) {}    
-
-    if ( !hasSrcLic ) {
-      obtainLicense( BP_LICENSE_GENERATOR );
-      hasDAPLic = true;
-    }
-  } else if ( sourceLicense2020Used ) {
-    try {
-      obtainLicense( BP_LICENSE_2020S );
-      hasSrcLic = true;
-    } catch ( std::exception &e ) {}
-
-    if ( !hasSrcLic ) {
-      obtainLicense( BP_LICENSE_GENERATOR );
-      hasDAPLic = true;
-    }
-  } else if ( binaryLicense2020Used ) {
-    try {
-        obtainLicense( BP_LICENSE_2020B );
-        hasBinLic = true;
-    } catch ( std::exception &e ) {}
-        
-    if ( !hasBinLic ) {
-        try {
-            obtainLicense( BP_LICENSE_GENERATOR );
-            hasDAPLic = true;
-        } catch ( std::exception &e ) {}
-    }
-
-    if ( !hasBinLic && !hasDAPLic ) {
-        try {
-            obtainLicense( BP_LICENSE_2020S );
-            hasSrcLic = true;
-        } catch ( std::exception &e ) {}
-    }
-    
-    if ( !hasBinLic && !hasSrcLic && !hasDAPLic ) {
-        std::ostringstream msg;
-        msg << "\nSORRY:  Failed to get " << bp_license_name(BP_LICENSE_2020B)
-            << " license from license manager.\n\n";
-        throw std::runtime_error(msg.str());
-    }
-
-    if ( !hasSrcLic && !hasDAPLic ) {
-      mungeInputArchFilePaths();
-    }
-  } else if ( sourceLicense3020Used ) {
-    try {
-      obtainLicense( BP_LICENSE_3020S );
-      hasSrcLic = true;
-    } catch ( std::exception &e ) {}
-
-    if ( !hasSrcLic ) {
-      obtainLicense( BP_LICENSE_GENERATOR );
-      hasDAPLic = true;
-    }
-  } else if ( binaryLicense3020Used ) {
-    try {
-        obtainLicense( BP_LICENSE_3020B );
-        hasBinLic = true;
-    } catch ( std::exception &e ) {}
-        
-    if ( !hasBinLic ) {
-        try {
-            obtainLicense( BP_LICENSE_GENERATOR );
-            hasDAPLic = true;
-        } catch ( std::exception &e ) {}
-    }
-
-    if ( !hasBinLic && !hasDAPLic ) {
-        try {
-            obtainLicense( BP_LICENSE_3020S );
-            hasSrcLic = true;
-        } catch ( std::exception &e ) {}
-    }
-
-    if ( !hasBinLic && !hasSrcLic && !hasDAPLic ) {
-        std::ostringstream msg;
-        msg << "\nSORRY:  Failed to get " << bp_license_name(BP_LICENSE_3020B)
-            << " license from license manager.\n\n";
-        throw std::runtime_error(msg.str());
-    }
-
-    if ( !hasSrcLic && !hasDAPLic ) {
-        mungeInputArchFilePaths();
-    }
-  } else {
-    obtainLicense( BP_LICENSE_GENERATOR );
-  }
 }
 
 /**
