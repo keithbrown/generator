@@ -365,10 +365,6 @@ SOURCE=.\bp_source\win32\7.1B\parser\src\sym.cc
 # End Source File
 # Begin Source File
 
-SOURCE=.\bp_source\win32\7.1B\utility\src\u_bplic.c
-# End Source File
-# Begin Source File
-
 SOURCE=.\bp_source\win32\7.1B\utility\src\u_config.cc
 # End Source File
 # Begin Source File
@@ -414,10 +410,6 @@ SOURCE=.\bp_source\win32\7.1B\utility\src\u_init.cc
 # Begin Source File
 
 SOURCE=.\bp_source\win32\7.1B\utility\src\u_keyword.cc
-# End Source File
-# Begin Source File
-
-SOURCE=.\bp_source\win32\7.1B\utility\src\u_licens.cc
 # End Source File
 # Begin Source File
 
@@ -1201,10 +1193,6 @@ SOURCE=.\bp_source\win32\7.1B\parser\include\tokens.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\bp_source\win32\7.1B\utility\include\u_bplic.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\bp_source\win32\7.1B\utility\src\u_cmd.cc
 # End Source File
 # Begin Source File
@@ -1266,10 +1254,6 @@ SOURCE=.\bp_source\win32\7.1B\utility\include\u_id.hh
 # Begin Source File
 
 SOURCE=.\bp_source\win32\7.1B\utility\include\u_keyword.hh
-# End Source File
-# Begin Source File
-
-SOURCE=.\bp_source\win32\7.1B\utility\include\u_licens.hh
 # End Source File
 # Begin Source File
 

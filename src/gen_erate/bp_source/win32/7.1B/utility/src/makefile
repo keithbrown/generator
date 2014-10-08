@@ -38,8 +38,6 @@ SOURCES = 	\
 		#u_ptrep.cc \
 		u_repdata.cc \
 
-C_SOURCES =	u_bplic.c
-
 COMPONENT = UTIL
 
 LIBNAME =	lib$(COMPONENT).a
