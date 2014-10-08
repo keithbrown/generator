@@ -45,8 +45,7 @@ SCHEMA_PATHS = \
 LDPATHS = \
 -LIBPATH:$(BUILD_DIR) \
 -LIBPATH:$(GALAXYHOME)/lib \
--LIBPATH:$(MC_DBMS_ROOTDIR)/lib \
--LIBPATH:$(MGLS_HOME)/lib 
+-LIBPATH:$(MC_DBMS_ROOTDIR)/lib
 
 ifeq (1,$(DEBUG_BUILD)) 
   MSDEV_LIBS = msvcrtd.lib msvcirtd.lib msvcprtd.lib \
@@ -73,8 +72,6 @@ else
 endif
 
 MC_DBMS_LIBS = mc_dbms.lib
-
-MGLS_LIBS = mgls.lib
 
 GALAXY_LIBS = \
 vgalc.lib \

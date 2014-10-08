@@ -23,11 +23,10 @@ set -u
 function usage
 {
   print -u2 "\n\n\
-usage:  $(basename ${1}) [-h] [-d] [-p <PCCTS directory>] [-m <MGLS directory>]
+usage:  $(basename ${1}) [-h] [-d] [-p <PCCTS directory>]
       h                :  Print this help message
       d                :  Run this script using the default library paths
       <PCCTS directory>:  The location on disk of the PCCTS library tree
-      <MGLS directory> :  The location on disk of the MGLS library tree
 
 description:
  This script creates the \"bp_build\" directory and it's associated
@@ -37,7 +36,7 @@ description:
  and header files that exist in the \"bp_source\" tree.
 
 example: 
-  ./$(basename ${1}) -p C:/lib/PCCTS/v1.33_mr20 -m C:/lib/mgls
+  ./$(basename ${1}) -p C:/lib/PCCTS/v1.33_mr20
 
 note:
   The library paths shown in the example above are the defaults used in 
@@ -73,26 +72,18 @@ print "    Be patient!  This will take a minute."
 # Parse the command line arguments and assign variables to what is found.
 #---------------------------------------------------------------------------
 pccts_dir=""
-mgls_dir=""
 if [[ $# -gt 0 ]] ; then
   if [[ "$1" == "-d" ]] ; then
     pccts_dir="C:/lib/PCCTS/v1.33_mr20"
-    mgls_dir="C:/lib/mgls"
   else 
     while getopts m:p: option $* ; do
       case "${option}" in
-        ( "m" )
-          mgls_dir=${OPTARG} ;;
         ( "p" )
           pccts_dir=${OPTARG} ;;
       esac
     done
   fi
   
-  if [ ! -d  ${mgls_dir} ] ; then
-    print "${mgls_dir} does not exist. Exiting.\n"
-    exit 2
-  fi 
   if [ ! -d  ${pccts_dir} ] ; then
     print "${pccts_dir} does not exist. Exiting.\n"
     exit 2
@@ -120,16 +111,6 @@ if [ ! -d ./bp_build ] ; then
   mkdir bp_build/win32/7.1B/build/mc_dbms
   mkdir bp_build/win32/7.1B/build_log
   mkdir bp_build/win32/7.1B/schema
-fi
-
-
-#---------------------------------------------------------------------------
-# Copy in the MGLS files
-#---------------------------------------------------------------------------
-if [[ "${mgls_dir}" != "" ]] ; then
-  cp -f ${mgls_dir}/win32/include/* ${build_dir}
-else
-  print "Don't forget to run this script with the MGLS path specified at least once!"
 fi
 
 #---------------------------------------------------------------------------

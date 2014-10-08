@@ -37,7 +37,6 @@ on either on the build server or their local development machine.
   under C:/lib
     . GalaxyGC30       - the Galaxy library
     . PCCTS/v1.33_mr20 - the PCCTS library
-    . mgls             - the Mentor Graphics License Server library
 
   If you desire to place the libraries somewhere other than C:/lib, you
   will have to modify bp_prod/win32/7.1B/build_scripts/get_host_platform.inc

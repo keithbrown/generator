@@ -26,6 +26,5 @@ INCLUDE_LIST  = -I${SOURCE_DIR}/${SOURCE_HOME}/action/include \
 		-I${SOURCE_DIR}/${SOURCE_HOME}/window/include \
 		-I$(GALAXYHOME)/include \
 		-I$(MC_DBMS_ROOTDIR)/include \
-                -I${MGLS_HOME}/include \
 		-I$(BUILD_DIR) \
                 -I.

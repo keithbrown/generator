@@ -20,7 +20,6 @@
 #   GALAXYHOME
 #   MC_DBMS_ROOTDIR
 #   MC_DBMS_SCHEMA_DIR
-#   MGLS_HOME
 #   CC_DIR
 #   ARCH1
 #   PRIVATE_HOME
@@ -66,7 +65,6 @@ case $RUNNING_PLATFORM in
         #OS_ROOTDIR=H:/OS6.0.SP8_17622_17667/ostore
         OS_ROOTDIR=H:/ODI_OS60_SP8/ostore
         OS_SCHEMA_DIR=${OS_ROOTDIR}/lib
-        MGLS_HOME=Z:/bp_source/${PLATFORM}/${VERSION}/mgls/${PLATFORM}
         CC_DIR=H:/PROGRA~1/MICROS~2/VC98/BIN
         JAVA_HOME=C:/PROGRA~1/Java/jdk1.3.1
         PLATFORM_JAVA=win32
@@ -81,7 +79,6 @@ case $RUNNING_PLATFORM in
     export GALAXYHOME
     export OS_ROOTDIR
     export OS_SCHEMA_DIR
-    export MGLS_HOME
     export CC_DIR
     export cc_DIR
     export JAVA_HOME
@@ -94,7 +91,6 @@ case $RUNNING_PLATFORM in
     echo "GALAXYHOME=$GALAXYHOME"
     echo "OS_ROOTDIR=$OS_ROOTDIR"
     echo "OS_SCHEMA_DIR=$OS_SCHEMA_DIR"
-    echo "MGLS_HOME=$MGLS_HOME"
     echo "CC_DIR=$CC_DIR"
     echo "cc_DIR=$CC_DIR"
     echo "JAVA_HOME=$JAVA_HOME"
@@ -111,7 +107,6 @@ case $RUNNING_PLATFORM in
         GALAXYHOME=C:/lib/GalaxyGC30
         MC_DBMS_ROOTDIR=C:/lib/mc_dbms
         MC_DBMS_SCHEMA_DIR=${MC_DBMS_ROOTDIR}/lib
-        MGLS_HOME=C:/lib/mgls/win32
         #VC6 - CC_DIR=C:/PROGRA~1/MICROS~3/VC98/BIN
         CC_DIR=C:/PROGRA~1/MICROS~1.NET/Vc7/bin
         JAVA_HOME=C:/PROGRA~1/Java/jdk1.3.1
@@ -129,7 +124,6 @@ case $RUNNING_PLATFORM in
     export GALAXYHOME
     export MC_DBMS_ROOTDIR
     export MC_DBMS_SCHEMA_DIR
-    export MGLS_HOME
     export CC_DIR
     export cc_DIR
     export JAVA_HOME
@@ -142,7 +136,6 @@ case $RUNNING_PLATFORM in
     echo "GALAXYHOME=$GALAXYHOME"
     echo "MC_DBMS_ROOTDIR=$MC_DBMS_ROOTDIR"
     echo "MC_DBMS_SCHEMA_DIR=$MC_DBMS_SCHEMA_DIR"
-    echo "MGLS_HOME=$MGLS_HOME"
     echo "CC_DIR=$CC_DIR"
     echo "cc_DIR=$CC_DIR"
     echo "JAVA_HOME=$JAVA_HOME"
