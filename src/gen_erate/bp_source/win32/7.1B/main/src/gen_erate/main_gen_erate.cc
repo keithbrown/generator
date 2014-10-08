@@ -91,12 +91,6 @@ bool gen_file_only = false;
 bool persistenceEnabled = true;
 bool debug = false;
 bool ThisIsGenImport = false;
-bool sourceLicense3020Used = false;
-bool binaryLicense3020Used = false;
-bool sourceLicense2020Used = false;
-bool binaryLicense2020Used = false;
-bool sourceLicenseSystemCUsed = false;
-bool sourceLicenseVHDLUsed = false;
 
 time_t g_start,g_end;
 
@@ -340,12 +334,6 @@ void parseCommandLineOptions(int argc, char** argv)
   cmd.add( arg_fullBlastLogging );
   cmd.add( arg_featureToEnable );
   cmd.add( arg_noPersistence );
-  cmd.add( arg_3020SourceLicense );
-  cmd.add( arg_3020BinaryLicense );
-  cmd.add( arg_2020SourceLicense );
-  cmd.add( arg_2020BinaryLicense );
-  cmd.add( arg_SystemCSourceLicense );
-  cmd.add( arg_VHDLSourceLicense );
 #ifdef _DEBUG
   cmd.add( arg_debug );
 #endif
@@ -378,12 +366,6 @@ void parseCommandLineOptions(int argc, char** argv)
   log_trace_on_full_blast_password_str = arg_fullBlastLogging.getValue().c_str();
   default_feature = arg_featureToEnable.getValue().c_str();
   persistenceEnabled = !arg_noPersistence.getValue();
-  sourceLicense3020Used = arg_3020SourceLicense.getValue();
-  binaryLicense3020Used = arg_3020BinaryLicense.getValue();
-  sourceLicense2020Used = arg_2020SourceLicense.getValue();
-  binaryLicense2020Used = arg_2020BinaryLicense.getValue();
-  sourceLicenseSystemCUsed = arg_SystemCSourceLicense.getValue();
-  sourceLicenseVHDLUsed = arg_VHDLSourceLicense.getValue();
 #ifdef _DEBUG
   debug = arg_debug.getValue();
 #endif
@@ -407,7 +389,6 @@ void parseCommandLineOptions(int argc, char** argv)
 
   // Retrieve the values specific to this run.
   if (thisIsGenFile) {
-    UseCachedLicense = true;
     gen_file_only = true;
     std::string genDBName  = arg_gen_db.getValue();
     std::string archFile  = arg_input_file.getValue();
@@ -419,7 +400,6 @@ void parseCommandLineOptions(int argc, char** argv)
       gen_file_name_str = arg_genFileName.getValue().c_str();
     }
   } else if (ThisIsGenImport) {
-    UseCachedLicense = false;
     gen_import_only = true;
     GS_domain_code = arg_singleDomainCode.getValue();
     validateDomainCode(GS_domain_code);
