@@ -11,7 +11,6 @@
  * Mentor Graphics Corp., and is not for external distribution.
  *======================================================================== 
  */
-#include <u_licens.hh>
 
 void LM_license::set_heartbeat()
 {

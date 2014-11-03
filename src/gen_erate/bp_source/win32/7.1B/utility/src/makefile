@@ -25,7 +25,6 @@ SOURCES = 	\
 		u_fopen.cc \
 		u_id.cc \
 		u_keyword.cc \
-		u_licens.cc \
 		u_log.cc \
 		u_mc_dbms.cc \
 		u_print.cc \
@@ -38,7 +37,7 @@ SOURCES = 	\
 		#u_ptrep.cc \
 		u_repdata.cc \
 
-C_SOURCES =	u_bplic.c
+C_SOURCES =	
 
 COMPONENT = UTIL
 

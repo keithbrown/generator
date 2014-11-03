@@ -39,8 +39,8 @@
 
 #include <p_swhere.hh>
 
+#include <u_bplic.h>
 #include <u_string.hh>
-#include <u_licens.hh>
 #include <u_trace.hh>
 #include <u_report.hh>
 #include <u_error.hh>
@@ -1628,18 +1628,6 @@ GS_archetype::populate_archetype (const GS_string& p_arch_file_name_str,
                          "\nSORRY:  Invalid feature code on .LICENSE statement.\n\n");
                 exit (255);
                 break;
-              }
-            if (check_license)
-              {
-                if (LM_license::obtain_license(lic_type) ==
-                    LM_license::LM_TERMINATE)
-                  {
-                    //  Failed while attempting to get license.
-                    //
-                    fprintf (stderr,
-                             "\nSORRY:  Failed to get architecture license from License Manager.\n\n");
-                    exit (255);
-                  }
               }
         }
 		else

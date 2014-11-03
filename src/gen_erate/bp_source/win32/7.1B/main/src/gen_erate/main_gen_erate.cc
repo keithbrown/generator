@@ -24,7 +24,6 @@
 #include <vstartup.h>
 #include <vformat.h>
 #include <tclap/CmdLine.h>
-#include <u_licens.hh>
 #include <u_string.hh>
 #include <u_trace.hh>
 #include <gs_ui.hh>
@@ -91,6 +90,12 @@ bool gen_file_only = false;
 bool persistenceEnabled = true;
 bool debug = false;
 bool ThisIsGenImport = false;
+bool sourceLicense3020Used = false;
+bool binaryLicense3020Used = false;
+bool sourceLicense2020Used = false;
+bool binaryLicense2020Used = false;
+bool sourceLicenseSystemCUsed = false;
+bool sourceLicenseVHDLUsed = false;
 
 time_t g_start,g_end;
 
@@ -304,6 +309,12 @@ void parseCommandLineOptions(int argc, char** argv)
   MultiArg<string>  arg_archFileList(       "", "arch", "Archetype file name(s)", false, "string");
   MultiArg<int>         arg_multiDomainCode(    "", "d", "The domain code.  This argument must immediately precede the \"-import\" argument that it applies to.", false, "integer");
   ValueArg<int>         arg_singleDomainCode(   "", "d", "The domain code.", false, -1, "integer");
+  SwitchArg                 arg_3020SourceLicense( "", "l3s", "Use MC-3020 source license", false);
+  SwitchArg                 arg_3020BinaryLicense( "", "l3b", "Use MC-3020 binary license", false);
+  SwitchArg                 arg_2020SourceLicense( "", "l2s", "Use MC-2020 source license", false);
+  SwitchArg                 arg_2020BinaryLicense( "", "l2b", "Use MC-2020 binary license", false);
+  SwitchArg                 arg_SystemCSourceLicense( "", "lSCs", "Use SystemC source license", false);
+  SwitchArg                 arg_VHDLSourceLicense( "", "lVHs", "Use VHDL source license", false);
 #ifdef _DEBUG
   SwitchArg             arg_debug(              "", "debug", "Debug the application (int 3 breakpoint)", false);
 #endif
@@ -334,6 +345,12 @@ void parseCommandLineOptions(int argc, char** argv)
   cmd.add( arg_fullBlastLogging );
   cmd.add( arg_featureToEnable );
   cmd.add( arg_noPersistence );
+  cmd.add( arg_3020SourceLicense );
+  cmd.add( arg_3020BinaryLicense );
+  cmd.add( arg_2020SourceLicense );
+  cmd.add( arg_2020BinaryLicense );
+  cmd.add( arg_SystemCSourceLicense );
+  cmd.add( arg_VHDLSourceLicense );
 #ifdef _DEBUG
   cmd.add( arg_debug );
 #endif
@@ -366,6 +383,12 @@ void parseCommandLineOptions(int argc, char** argv)
   log_trace_on_full_blast_password_str = arg_fullBlastLogging.getValue().c_str();
   default_feature = arg_featureToEnable.getValue().c_str();
   persistenceEnabled = !arg_noPersistence.getValue();
+  sourceLicense3020Used = arg_3020SourceLicense.getValue();
+  binaryLicense3020Used = arg_3020BinaryLicense.getValue();
+  sourceLicense2020Used = arg_2020SourceLicense.getValue();
+  binaryLicense2020Used = arg_2020BinaryLicense.getValue();
+  sourceLicenseSystemCUsed = arg_SystemCSourceLicense.getValue();
+  sourceLicenseVHDLUsed = arg_VHDLSourceLicense.getValue();
 #ifdef _DEBUG
   debug = arg_debug.getValue();
 #endif

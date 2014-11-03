@@ -47,7 +47,6 @@ LDPATHS = \
 -LIBPATH:$(BUILD_DIR) \
 -LIBPATH:$(GALAXYHOME)/lib \
 -LIBPATH:$(MC_DBMS_ROOTDIR)/lib \
--LIBPATH:$(MGLS_HOME)/lib 
 
 # For debug (LIBDEBUG = -debug):         
 # MSDEV_LIBS = msvcrt.lib msvcirt.lib \
@@ -66,8 +65,6 @@ mpr.lib \
 netapi32.lib
 
 MC_DBMS_LIBS = mc_dbms.lib
-
-MGLS_LIBS = mgls.lib
 
 GALAXY_LIBS = \
 vgalc.lib \

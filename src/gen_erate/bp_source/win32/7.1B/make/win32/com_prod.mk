@@ -79,7 +79,7 @@ analyst.exe:	repb main_ooa.obj schema_ooa.obj ooa_force.obj sim_force.obj \
 	$(LNK) $(TFLAGS) $(OOA_LIBOPTS) $(LIBDEBUG) -out:$@ \
 		main_ooa.obj schema_ooa.obj ooa_force.obj sim_force.obj \
 		$(OOA_LDLIBS) \
-		$(GALAXY_LIBS) $(MC_DBMS_LIBS) $(MGLS_LIBS) $(MSDEV_LIBS) \
+		$(GALAXY_LIBS) $(MC_DBMS_LIBS) $(MSDEV_LIBS) \
 		$(SCHEMA_PATHS) $(LDPATHS)
 	- chmod 777 $@
 	rm -f analyst.vr
@@ -92,7 +92,7 @@ sim_ooa.exe:	trans main_sim.obj schema_sim.obj sim_force.obj gen_force.obj \
 	$(LNK) $(TFLAGS)  $(SIM_LIBOPTS) $(LIBDEBUG) -out:$@ \
 		main_sim.obj schema_sim.obj sim_force.obj gen_force.obj \
 		$(SIM_LDLIBS) \
-		$(GALAXY_LIBS) $(MC_DBMS_LIBS) $(MGLS_LIBS) $(MSDEV_LIBS) \
+		$(GALAXY_LIBS) $(MC_DBMS_LIBS) $(MSDEV_LIBS) \
 		$(SCHEMA_PATHS) $(LDPATHS)
 	- chmod 777 $@
 	rm -f sim_ooa.vr
@@ -109,7 +109,7 @@ gen_erate.exe: main_imp.obj gen_force.obj trans main_gen.obj main_gen_erate.obj 
 	$(LNK) $(TFLAGS) $(GEN_LIBOPTS) $(LIBDEBUG) -out:$@ \
 		main_gen.obj gen_force.obj main_imp.obj main_gen_erate.obj \
 		$(GEN_LDLIBS) $(DBIO_LDLIBS) \
-		$(GALAXY_LIBS) $(MC_DBMS_LIBS) $(MGLS_LIBS) $(MSDEV_LIBS) \
+		$(GALAXY_LIBS) $(MC_DBMS_LIBS) $(MSDEV_LIBS) \
 		$(SCHEMA_PATHS) $(LDPATHS)
 	- chmod 777 $@
 	
