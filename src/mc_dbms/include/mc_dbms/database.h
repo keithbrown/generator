@@ -97,25 +97,13 @@ public:
 
 	virtual void restore();
 	
-	/**
-	 * Get a license from our license manager.  If unable to get a license then
-	 * throw an exception.
-	 */
-	void aquireLicense();
-	
 private:
 	static mc_dbms_database m_transient_db;
 	static mc_dbms_database m_persistent_db;
 	static bool SerializationEnabled;
-	static bool LicenseAquired;
 	
 	enum { DB_NOT_YET_ACCESSED = -1 };
 
-	/**
-	 * This constant tells us how long, in seconds, a license is valid for.
-	 */
-	const long	LifetimeOfLicense;
-	
 	std::list< mc_dbms_database_root > m_roots;
 	time_t	m_lastAccessed;
 };

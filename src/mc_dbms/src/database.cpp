@@ -19,13 +19,9 @@
 mc_dbms_database mc_dbms_database::m_transient_db;
 mc_dbms_database mc_dbms_database::m_persistent_db;
 bool mc_dbms_database::SerializationEnabled = false;
-bool mc_dbms_database::LicenseAquired = false;
-void validateLicense();
-extern bool UseCachedLicense;
 
 mc_dbms_database::mc_dbms_database() : 
-	m_lastAccessed(DB_NOT_YET_ACCESSED),
-	LifetimeOfLicense(60*60)  // One hour (in seconds)
+	m_lastAccessed(DB_NOT_YET_ACCESSED)
 {
 }
 
@@ -77,12 +73,6 @@ long mc_dbms_database::persist()
 {
 	long totalBytesWritten = 0;
 	
-	// If we aren't caching the license info then leave the lastAssessed flag 
-	// set to its default of DB_NOT_YET_ACCESSED
-	if (UseCachedLicense) {
-		time (&m_lastAccessed);
-	} 
-	
 	totalBytesWritten += writeBlob( (char*)&m_lastAccessed, sizeof(time_t) );
 	totalBytesWritten += writeLong( m_roots.size() );
 
@@ -97,39 +87,10 @@ long mc_dbms_database::persist()
 void  mc_dbms_database::restore()
 {
 	readBlob( (char*)&m_lastAccessed );
-	if (UseCachedLicense) {
-		aquireLicense();
-	}
 	long numRoots = readLong( );
 	for (long i = 0; i < numRoots; ++i) {
 		mc_dbms_database_root* root = mc_dbms_database_root::create();
 		m_persistent_db.m_roots.push_back(*root);
 	}
 }
-
-void mc_dbms_database::aquireLicense()
-{
-	if ( m_lastAccessed != DB_NOT_YET_ACCESSED ) {
-		time_t now;
-		time(&now);
-		double lastUsed = difftime (now, m_lastAccessed);
-		// If we aquired a license less then "LifetimeOfLicense" seconds ago, 
-		// then we will not go get it again.  We also do a check to make sure that
-		// someone didn't simply set the clock back.
-		if ( lastUsed <= LifetimeOfLicense && now > m_lastAccessed) 
-		{
-			LicenseAquired = true;
-		}
-	}
-	
-	if (!LicenseAquired) {
-		// Get the license from the license manager, throw an exception
-		// if unable to aquire the license.  The validateLicense() ocmmand
-		// function must be implemented by the user of the mc_dbms library.
-		validateLicense();
-		
-		LicenseAquired = true;
-	}
-}
-
 
