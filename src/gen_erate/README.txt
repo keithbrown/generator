@@ -98,7 +98,7 @@ on either on the build server or their local development machine.
 4.3  Build
   _- cd <git repo root dir>/xtuml/generator/src/gen_erate
   _- rm -rf bp_build
-  _- ./create_bp_build -p C:/lib/PCCTS/v1.33_mr20 -m C:/lib/mgls
+  _- ./create_bp_build -p C:/lib/PCCTS/v1.33_mr20
   _- cd bp_prod/win32/7.1B/build_scripts
   _- dos2unix * 
 
